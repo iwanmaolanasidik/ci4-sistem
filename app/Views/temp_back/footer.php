@@ -33,10 +33,11 @@
             return false;
         }  
         $(this).parent().addClass('active').siblings().removeClass('active');
-        //$("#content").html(load_content);
-        //var param = {[csrfName]: csrfHash, ajax:"yes"};
+        $("#loading").html(load_content).addClass('overlay');
+        //var param = {[csrfName]: csrfHash, ajax:"yes"}; jika sudah ada token
+        var param = {ajax:"yes"};
         $.ajax({
-            type: "POST",dataType: "json",data: '', url: url,
+            type: "POST",dataType: "json",data: param, url: url,
             success: function(val){
                 //csrfHash=val[csrfName];
                 //$('.modal.aside').remove();
@@ -44,6 +45,7 @@
                 $(".uri").val(url);
                 //$('title').html(title);
                 $("#content").html(val["data"]);
+                $("#loading").html('').removeClass('overlay');
                 //activemenu();
             }
         });		

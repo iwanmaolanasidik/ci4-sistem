@@ -25,7 +25,7 @@
 
   <!-- Var -->
   <script>
-  var load_content = '<div id="loading_content_area"><div class="loading_content"><h1>LOADING</h1><span></span><span></span><span></span></div></div>';
+  var load_content = '<i class="fa fa-refresh fa-spin"></i>';
   </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
