@@ -9,10 +9,6 @@ class Dashboard extends BaseController
         echo view('temp_back/content', $data);
     }
 
-    function new(){
-        
-    }
-
     public function index()
     {
         $data['title'] = "Dashboard";
