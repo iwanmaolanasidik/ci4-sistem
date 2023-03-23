@@ -64,7 +64,7 @@
 </div>
 
 <!-- login or register -->
-<div class="login-box">
+<div class="login-box" style="">
 
     <div class="login-logo">
     </div>
@@ -80,12 +80,12 @@
             </div>
 
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="Username" name="username">
+                <input type="text" class="form-control" placeholder="Username" name="username" oninput="removeClass()">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
 
             <div class="form-group has-feedback">
-                <input type="email" class="form-control" placeholder="Email" name="email">
+                <input type="text" class="form-control" placeholder="Email" name="email" oninput="removeClass()">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
 
@@ -107,7 +107,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+                    <button type="submit" id="btn-registrasi" class="btn btn-primary btn-block btn-flat"><i class="fa fa-refresh fa-spin"></i> Register</button>
                 </div>
                 <!-- /.col -->
             </div> 
@@ -132,6 +132,9 @@
     });
   });
 
+  // hide spinner di btn-registrasi
+  $('.fa-spin').hide()
+
   // registrasi
   function registrasi(){
     var url = $('#form-registrasi').attr('url');
@@ -149,19 +152,47 @@
       data: {
         name: name, username: username, email: email, password: password, password2: password2 
       },
+      beforeSend: function(){
+        $('.fa-spin').show();
+        $('#btn-registrasi').attr('disabled', 'disabled');
+      },
       success: function(res){
-        if(res["gagal"]==false){
-          $('input[name="name"]').addClass('invalid');
-          $('#alert').html('<div class="box box-danger box-solid" style="position: absolute; bottom:0; right: 1vw; z-index: -1; width:313px;"><div class="box-header with-border"><i class="fa fa-warning"></i><h3 class="box-title"> Peringatan</h3><div class="box-tools pull-right"><button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button></div></div><div class="box-body">'+res["info"]+'</div></div>');
+        if(res.error){
+          $.each(res.error, function(key, value){
+            console.log(key+" - "+value);
+            if(!value){
+              $('input[name="'+key+'"]').removeClass('invalid');  
+            }else{
+              $('input[name="'+key+'"]').addClass('invalid');
+            }
+          })
+          dangerAlert(res.info);
+          $('.fa-spin').hide();
+          $('#btn-registrasi').removeAttr('disabled', 'disabled');
         }else{
-          alert(res["info"]);
+          successAlert(res["info"]);
+          setTimeout(window.location.href = '<?= base_url() ?>login', 3000);
+          $('.fa-spin').hide()
+          $('#btn-registrasi').removeAttr('disabled', 'disabled');
         }
       }
     })
   }
 
+  function dangerAlert(info){
+    $('#alert').html('<div class="box box-danger box-solid alert-box" style="position: absolute; bottom:0; right: 1vw; width:313px;"><div class="box-header with-border"><i class="fa fa-warning"></i><h3 class="box-title"> Peringatan</h3><div class="box-tools pull-right"><button type="button" class="btn btn-box-tool" data-widget="remove" onclick="alertClose()"><i class="fa fa-times"></i></button></div></div><div class="box-body">'+info+'</div></div>');
+  }
+
+  function successAlert(info){
+    $('#alert').html('<div class="box box-success box-solid alert-box" style="position: absolute; bottom:0; right: 1vw; width:313px;"><div class="box-header with-border"><i class="fa fa-warning"></i><h3 class="box-title"> Peringatan</h3><div class="box-tools pull-right"><button type="button" class="btn btn-box-tool" data-widget="remove" onclick="alertClose()"><i class="fa fa-times"></i></button></div></div><div class="box-body">'+info+'</div></div>');
+  }
+
   function removeClass(){
     $('input[name="name"]').removeClass('invalid');
+  }
+
+  function alertClose(){
+    $('.alert-box').hide();
   }
 </script>
 
