@@ -32,6 +32,11 @@ $routes->set404Override();
 $routes->match(['get', 'post'],'/', 'Dashboard::index');
 $routes->match(['get', 'post'],'/profil', 'Dashboard::profil');
 
+// AUTH
+$routes->get('/login', 'Auth::login');
+$routes->match(['get', 'post'],'/registrasi', 'Auth::registrasi');
+$routes->post('/proses_registrasi', 'Auth::proses_registrasi');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

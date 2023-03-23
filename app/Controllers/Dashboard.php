@@ -12,7 +12,7 @@ class Dashboard extends BaseController
     public function index()
     {
         $data['title'] = "Dashboard";
-        $data['subTitle'] = "Sub title";
+        //$data['subTitle'] = "Sub title";
         //$data['subTitle2'] = "Sub title 2";
         $ajax = $this->request->getPost("ajax");
         if ($ajax == "yes") {

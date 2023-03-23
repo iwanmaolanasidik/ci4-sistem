@@ -17,5 +17,6 @@
         <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<?=$this->include('temp_back/footer')?>
 
 <?= $this->endSection() ?>
