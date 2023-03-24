@@ -17,6 +17,42 @@ class Auth extends ResourceController
        return view('auth/login');
     }
 
+    public function proses_login(){
+        $user = new AuthModel();
+        $username = $this->request->getVar('username');
+        $username = $this->request->getVar('password');
+
+        //cek username
+        $dataUser = $user->where(['username' => $username])->first();
+        if($dataUser){//ada user
+            if(password_verify($password, $dataUser->password)){
+                //password benar
+                //active tidak?
+
+                //buat session
+                session()->set([
+                    'name'      => $dataUser->name,
+                    'username'  => $dataUser->username,
+                    'email'     => $dataUser->email,
+                    'photo'     => $dataUser->photo,
+                    'active'    => $dataUser->active,
+                    'role_id'   => $dataUser->role_id
+                ]);
+                //return response json true
+                $var["login"] == true;
+                $var["info"] = "Berhasil login.";
+            }else{
+                //return password salah
+                $var["info"] = "Password salah.";
+            }
+        }else{
+            //return alert username tidak terdaftar
+            $var["info"] = "Username tidak terdaftar.";
+        }
+
+        return json_encode($var);
+    }
+
     public function registrasi()
     {
         return view('auth/registrasi');
@@ -86,7 +122,7 @@ class Auth extends ResourceController
                 "created_at" => date("Y-m-d H:i:s"),
                 "update_at" => null,
             ]);
-            $var["info"] = "Data berhasil di simpan.";
+            $var["info"] = "Akun berhasil di buat.";
 
         }else{
             $var["gagal"] = false;
@@ -103,43 +139,4 @@ class Auth extends ResourceController
         return json_encode($var);
     }
 
-    /**
-     * Create a new resource object, from "posted" parameters
-     *
-     * @return mixed
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Return the editable properties of a resource object
-     *
-     * @return mixed
-     */
-    public function edit($id = null)
-    {
-        //
-    }
-
-    /**
-     * Add or update a model resource, from "posted" properties
-     *
-     * @return mixed
-     */
-    public function update($id = null)
-    {
-        //
-    }
-
-    /**
-     * Delete the designated resource object from the model
-     *
-     * @return mixed
-     */
-    public function delete($id = null)
-    {
-        //
-    }
 }

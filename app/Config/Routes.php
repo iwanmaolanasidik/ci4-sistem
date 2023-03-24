@@ -34,6 +34,8 @@ $routes->match(['get', 'post'],'/profil', 'Dashboard::profil');
 
 // AUTH
 $routes->get('/login', 'Auth::login');
+$routes->post('/proses_login', 'Auth::proses_login');
+
 $routes->match(['get', 'post'],'/registrasi', 'Auth::registrasi');
 $routes->post('/proses_registrasi', 'Auth::proses_registrasi');
 

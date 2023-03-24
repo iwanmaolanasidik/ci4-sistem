@@ -101,7 +101,7 @@
 
             <div class="row">
                 <div class="col-xs-8">
-                  <a href="" style="color:#777;">
+                  <a href="#" style="color:#777;" id="show-password">
                     <span class="glyphicon glyphicon-eye-open"></span> Show password
                   </a>
                 </div>
@@ -171,9 +171,9 @@
           $('#btn-registrasi').removeAttr('disabled', 'disabled');
         }else{
           successAlert(res["info"]);
-          setTimeout(window.location.href = '<?= base_url() ?>login', 3000);
-          $('.fa-spin').hide()
-          $('#btn-registrasi').removeAttr('disabled', 'disabled');
+          setTimeout(() => {window.location.href = '<?= base_url() ?>login'; $('.fa-spin').hide(); $('#btn-registrasi').removeAttr('disabled', 'disabled');}, 3000);
+          
+          
         }
       }
     })
@@ -184,7 +184,7 @@
   }
 
   function successAlert(info){
-    $('#alert').html('<div class="box box-success box-solid alert-box" style="position: absolute; bottom:0; right: 1vw; width:313px;"><div class="box-header with-border"><i class="fa fa-warning"></i><h3 class="box-title"> Peringatan</h3><div class="box-tools pull-right"><button type="button" class="btn btn-box-tool" data-widget="remove" onclick="alertClose()"><i class="fa fa-times"></i></button></div></div><div class="box-body">'+info+'</div></div>');
+    $('#alert').html('<div class="box box-success box-solid alert-box" style="position: absolute; bottom:0; right: 1vw; width:313px;"><div class="box-header with-border"><i class="fa fa-check"></i><h3 class="box-title"> Berhasil</h3><div class="box-tools pull-right"><button type="button" class="btn btn-box-tool" data-widget="remove" onclick="alertClose()"><i class="fa fa-times"></i></button></div></div><div class="box-body">'+info+'</div></div>');
   }
 
   function removeClass(){
@@ -194,6 +194,30 @@
   function alertClose(){
     $('.alert-box').hide();
   }
+
+  $(document).on({
+      mouseenter: function () {
+        $('input[name="password"]').removeAttr('type','password');
+        $('input[name="password"]').attr('type','text');
+        $('input[name="password2"]').removeAttr('type','password');
+        $('input[name="password2"]').attr('type','text');
+        $('#show-password').css('color','#367fa9');
+      },
+
+      mouseleave: function () {
+        $('input[name="password"]').removeAttr('type','text');
+        $('input[name="password"]').attr('type','password');
+        $('input[name="password2"]').removeAttr('type','text');
+        $('input[name="password2"]').attr('type','password');
+        $('#show-password').css('color','#777');
+
+      }
+  }, '#show-password');
+
+  // function showPassword(){
+  //   $('input[name="password"]').removeAttr('type','password');
+  //   $('input[name="password"]').removeAttr('type','text');
+  // }
 </script>
 
 </body>
