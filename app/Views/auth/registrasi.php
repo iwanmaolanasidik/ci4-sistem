@@ -75,17 +75,17 @@
 
         <form id="form-registrasi" action="javascript:registrasi()" url="<?=base_url()?>proses_registrasi">
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="Nama" name="name" oninput="removeClass()">
+                <input type="text" class="form-control" placeholder="Nama" name="name">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
 
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="Username" name="username" oninput="removeClass()">
+                <input type="text" class="form-control" placeholder="Username" name="username">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
 
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="Email" name="email" oninput="removeClass()">
+                <input type="text" class="form-control" placeholder="Email" name="email">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
 
@@ -159,9 +159,9 @@
       success: function(res){
         if(res.error){
           $.each(res.error, function(key, value){
-            console.log(key+" - "+value);
+            // console.log(key+" - "+value);
             if(!value){
-              $('input[name="'+key+'"]').removeClass('invalid');  
+              $('input[name="'+key+'"]').removeClass('invalid');
             }else{
               $('input[name="'+key+'"]').addClass('invalid');
             }
@@ -172,8 +172,6 @@
         }else{
           successAlert(res["info"]);
           setTimeout(() => {window.location.href = '<?= base_url() ?>login'; $('.fa-spin').hide(); $('#btn-registrasi').removeAttr('disabled', 'disabled');}, 3000);
-          
-          
         }
       }
     })
@@ -185,10 +183,6 @@
 
   function successAlert(info){
     $('#alert').html('<div class="box box-success box-solid alert-box" style="position: absolute; bottom:0; right: 1vw; width:313px;"><div class="box-header with-border"><i class="fa fa-check"></i><h3 class="box-title"> Berhasil</h3><div class="box-tools pull-right"><button type="button" class="btn btn-box-tool" data-widget="remove" onclick="alertClose()"><i class="fa fa-times"></i></button></div></div><div class="box-body">'+info+'</div></div>');
-  }
-
-  function removeClass(){
-    $('input[name="name"]').removeClass('invalid');
   }
 
   function alertClose(){

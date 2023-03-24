@@ -20,37 +20,41 @@ class Auth extends ResourceController
     public function proses_login(){
         $user = new AuthModel();
         $username = $this->request->getVar('username');
-        $username = $this->request->getVar('password');
+        $password = $this->request->getVar('password');
 
         //cek username
         $dataUser = $user->where(['username' => $username])->first();
+        // var_dump($dataUser); die;
         if($dataUser){//ada user
-            if(password_verify($password, $dataUser->password)){
+            if(password_verify($password, $dataUser["password"])){
                 //password benar
                 //active tidak?
 
                 //buat session
-                session()->set([
-                    'name'      => $dataUser->name,
-                    'username'  => $dataUser->username,
-                    'email'     => $dataUser->email,
-                    'photo'     => $dataUser->photo,
-                    'active'    => $dataUser->active,
-                    'role_id'   => $dataUser->role_id
-                ]);
+                // session()->set([
+                //     'name'      => $dataUser->name,
+                //     'username'  => $dataUser->username,
+                //     'email'     => $dataUser->email,
+                //     'photo'     => $dataUser->photo,
+                //     'active'    => $dataUser->active,
+                //     'role_id'   => $dataUser->role_id
+                // ]);
                 //return response json true
-                $var["login"] == true;
+                $var["login"] = true;
                 $var["info"] = "Berhasil login.";
+
             }else{
                 //return password salah
+                $var["gagal"] = 'password';
                 $var["info"] = "Password salah.";
             }
         }else{
             //return alert username tidak terdaftar
+            $var["gagal"] = 'username';
             $var["info"] = "Username tidak terdaftar.";
         }
-
         return json_encode($var);
+        
     }
 
     public function registrasi()
@@ -116,7 +120,7 @@ class Auth extends ResourceController
                 "username" => $this->request->getPost('username'),
                 "email" => $this->request->getPost('email'),
                 "photo" => 'default.jpg',
-                "password" => $this->request->getPost('password'),
+                "password" => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
                 "active" => 1, //active
                 "role_id" => 1, //administrator
                 "created_at" => date("Y-m-d H:i:s"),
