@@ -31,14 +31,14 @@ class Auth extends ResourceController
                 //active tidak?
 
                 //buat session
-                // session()->set([
-                //     'name'      => $dataUser->name,
-                //     'username'  => $dataUser->username,
-                //     'email'     => $dataUser->email,
-                //     'photo'     => $dataUser->photo,
-                //     'active'    => $dataUser->active,
-                //     'role_id'   => $dataUser->role_id
-                // ]);
+                session()->set([
+                    'name'      => $dataUser['name'],
+                    'username'  => $dataUser['username'],
+                    'email'     => $dataUser['email'],
+                    'photo'     => $dataUser['photo'],
+                    'active'    => $dataUser['active'],
+                    'role_id'   => $dataUser['role_id']
+                ]);
                 //return response json true
                 $var["login"] = true;
                 $var["info"] = "Berhasil login.";

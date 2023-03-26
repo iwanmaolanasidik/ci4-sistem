@@ -75,17 +75,17 @@
 
         <form id="form-registrasi" action="javascript:registrasi()" url="<?=base_url()?>proses_registrasi">
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="Nama" name="name">
+                <input type="text" class="form-control" placeholder="Nama" name="name" oninput="removeClass()">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
 
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="Username" name="username">
+                <input type="text" class="form-control" placeholder="Username" name="username" oninput="removeClass()">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
 
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="Email" name="email">
+                <input type="text" class="form-control" placeholder="Email" name="email" oninput="removeClass()">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
 
@@ -123,6 +123,8 @@
 <script src="<?=base_url()?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="<?=base_url()?>plugins/iCheck/icheck.min.js"></script>
+<script src="<?=base_url()?>act/alert.js"></script>
+
 <script>
   $(function () {
     $('input').iCheck({
@@ -159,9 +161,9 @@
       success: function(res){
         if(res.error){
           $.each(res.error, function(key, value){
-            // console.log(key+" - "+value);
+            console.log(key+" - "+value);
             if(!value){
-              $('input[name="'+key+'"]').removeClass('invalid');
+              $('input[name="'+key+'"]').removeClass('invalid');  
             }else{
               $('input[name="'+key+'"]').addClass('invalid');
             }
@@ -177,16 +179,8 @@
     })
   }
 
-  function dangerAlert(info){
-    $('#alert').html('<div class="box box-danger box-solid alert-box" style="position: absolute; bottom:0; right: 1vw; width:313px;"><div class="box-header with-border"><i class="fa fa-warning"></i><h3 class="box-title"> Peringatan</h3><div class="box-tools pull-right"><button type="button" class="btn btn-box-tool" data-widget="remove" onclick="alertClose()"><i class="fa fa-times"></i></button></div></div><div class="box-body">'+info+'</div></div>');
-  }
-
-  function successAlert(info){
-    $('#alert').html('<div class="box box-success box-solid alert-box" style="position: absolute; bottom:0; right: 1vw; width:313px;"><div class="box-header with-border"><i class="fa fa-check"></i><h3 class="box-title"> Berhasil</h3><div class="box-tools pull-right"><button type="button" class="btn btn-box-tool" data-widget="remove" onclick="alertClose()"><i class="fa fa-times"></i></button></div></div><div class="box-body">'+info+'</div></div>');
-  }
-
-  function alertClose(){
-    $('.alert-box').hide();
+  function removeClass(){
+    $('input[name="name"]').removeClass('invalid');
   }
 
   $(document).on({
