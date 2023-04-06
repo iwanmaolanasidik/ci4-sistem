@@ -66,8 +66,20 @@
       </div>
       <!-- /.box-header -->
       <div class="box-body">
-        The body of the box
+        <div class="input-group">
+          <input type="text" class="form-control" name="username" placeholder="Username">
+          <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        </div>
+        <br>
+        <div class="input-group">
+          <input type="password" class="form-control" name="password" placeholder="Password">
+          <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+        </div>
       </div>
+      <div class="input-group" style="align-content:right;">
+        <button type="button" class="btn bg-orange btn-flat margin">.btn.bg-orange.btn-flat</button>
+      </div>
+      
       <!-- /.box-body -->
     </div>
     <!-- /.box -->
